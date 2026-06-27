@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESITRACK · ENAMED 2026 · Vinícius</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#F5F0EB;--card:#FFFCF9;--card2:#FDF8F5;
+  --pink:#E8537A;--rose:#C9365E;--pink-pale:#FDF0F3;--pink-light:#F9C5D3;
+  --gold:#D4943A;--blue:#4A7CE5;--green:#22A85C;--green-dk:#1B8A4A;
+  --red:#E5484D;--red-dk:#CD2B31;--orange:#E5873A;--purple:#8B5CF6;
+  --t1:#1A1A1A;--t2:#555;--t3:#888;--t4:#CCC;
+  --sep:rgba(0,0,0,.07);--sep2:rgba(0,0,0,.04);
+  --r:14px;--r-sm:10px;
+  --shadow:0 1px 4px rgba(0,0,0,.05),0 6px 20px rgba(0,0,0,.04);
+  --shadow-lg:0 4px 16px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.07);
+}
+[data-theme="dark"]{
+  --bg:#0d0d0d;--card:#141414;--card2:#1a1a1a;
+  --pink:#ff6b9d;--rose:#e8537a;--pink-pale:rgba(232,83,122,.08);--pink-light:rgba(232,83,122,.2);
+  --t1:#e8e8e8;--t2:#aaa;--t3:#666;--t4:#333;
+  --sep:rgba(255,255,255,.08);--sep2:rgba(255,255,255,.04);
+  --shadow:0 1px 4px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3);
+  --shadow-lg:0 4px 16px rgba(0,0,0,.5),0 16px 40px rgba(0,0,0,.4);
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.5;min-height:100vh;transition:background .25s,color .25s}
+
+/* ══ HERO ══ */
+.hero{
+  background:linear-gradient(160deg,#F8D0DC 0%,#EFA3B8 35%,#E8537A 70%,#C9365E 100%);
+  padding:34px 0 54px;position:relative;overflow:hidden;border-radius:0 0 28px 28px;
+}
+[data-theme="dark"] .hero{filter:brightness(.82)}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.25;pointer-events:none}
+.hero-blob-1{width:200px;height:200px;background:#fff;top:-40px;right:8%}
+.hero-blob-2{width:150px;height:150px;background:var(--rose);bottom:-30px;left:5%}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.hero-left{flex:1}
+.hero-brand{font-size:13px;font-weight:800;color:rgba(255,255,255,.65);letter-spacing:-.01em;margin-bottom:10px}
+.hero h1{font-size:38px;font-weight:900;letter-spacing:-.04em;color:#fff;line-height:1.05;margin-bottom:6px;text-shadow:0 2px 12px rgba(0,0,0,.1)}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.75);font-weight:600}
+.hero-actions{display:flex;gap:8px;align-items:center;margin-top:4px}
+.btn-theme,.btn-hero{
+  height:38px;border-radius:100px;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);
+  color:#fff;cursor:pointer;font-size:17px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;flex-shrink:0;font-family:'Inter',sans-serif}
+.btn-theme{width:38px}
+.btn-hero{padding:0 16px;font-size:13px;font-weight:700;gap:6px}
+.btn-theme:hover,.btn-hero:hover{background:rgba(255,255,255,.3)}
+
+/* ══ COUNTDOWN PILL ══ */
+.countdown{
+  display:inline-flex;align-items:center;gap:7px;margin-top:12px;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;color:#fff}
+.countdown b{font-size:14px;font-weight:900}
+
+/* ══ STATS BAR ══ */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:10px;
+  max-width:1100px;margin:-30px auto 0;padding:0 24px;position:relative;z-index:2;
+}
+.stat-card{
+  background:rgba(255,255,255,.88);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.55);border-radius:12px;
+  padding:14px 10px;text-align:center;
+  box-shadow:0 2px 12px rgba(232,83,122,.07),0 4px 16px rgba(0,0,0,.04);
+  transition:transform .2s;
+}
+[data-theme="dark"] .stat-card{background:rgba(25,25,25,.92);border-color:rgba(255,255,255,.1)}
+.stat-card:hover{transform:translateY(-2px)}
+.sv{font-size:1.4rem;font-weight:900;letter-spacing:-.03em}
+.sl{color:var(--t3);font-size:.62rem;font-weight:700;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+
+/* ══ PAGE ══ */
+.page{max-width:1100px;margin:0 auto;padding:28px 24px 90px}
+
+/* ══ SYNC BANNER ══ */
+.sync-banner{
+  display:flex;align-items:center;gap:10px;margin:24px 0 4px;
+  font-size:12px;font-weight:600;color:var(--t3);
+}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--t4);transition:background .3s;flex-shrink:0}
+.sync-dot.on{background:var(--green);box-shadow:0 0 8px rgba(34,168,92,.5)}
+.sync-dot.err{background:var(--red)}
+
+/* ══ INFO CARD ══ */
+.info-card{
+  display:flex;gap:14px;align-items:flex-start;
+  border-radius:var(--r);padding:16px 18px;margin-bottom:18px;
+  background:var(--pink-pale);border:1.5px solid rgba(232,83,122,.12);
+  font-size:13px;color:var(--t2);line-height:1.6;
+}
+.info-card strong{color:var(--t1)}
+
+/* ══ SECTION HEAD ══ */
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;margin:32px 0 14px;gap:12px}
+.section-title{font-size:22px;font-weight:900;letter-spacing:-.03em}
+.section-desc{font-size:12px;color:var(--t2);margin-top:3px;line-height:1.5}
+
+/* ══ FILTERS ══ */
+.filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.fg{display:flex;gap:3px;background:var(--card);border:1.5px solid var(--sep);border-radius:100px;padding:4px}
+.fb{
+  padding:6px 14px;border:none;border-radius:100px;background:transparent;
+  color:var(--t3);font-size:12px;font-family:'Inter',sans-serif;font-weight:700;
+  cursor:pointer;transition:all .15s;white-space:nowrap}
+.fb:hover{color:var(--t1)}
+.fb.active{background:var(--pink);color:#fff}
+.fb.f-muito.active{background:var(--red)}
+.fb.f-prevalente.active{background:var(--orange)}
+.fb.f-normal.active{background:var(--blue)}
+.fb.f-baixa.active{background:var(--t3)}
+.search-wrap{flex:1;min-width:180px;max-width:300px}
+.search{
+  width:100%;padding:9px 16px;background:var(--card);
+  border:1.5px solid var(--sep);border-radius:100px;
+  color:var(--t1);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+  outline:none;transition:border-color .2s}
+.search:focus{border-color:var(--pink)}
+.search::placeholder{color:var(--t3)}
+
+/* ══ WEEK BLOCKS ══ */
+.week-block{border-radius:var(--r);margin-bottom:9px;overflow:hidden;background:var(--card);border:1.5px solid var(--sep);transition:box-shadow .2s,border-color .2s}
+.week-block:hover{box-shadow:var(--shadow)}
+.week-block.all-done{border-color:rgba(34,168,92,.3)}
+
+.week-hd{
+  padding:13px 18px;display:flex;align-items:center;gap:13px;
+  cursor:pointer;user-select:none}
+.week-num{font-size:11px;font-weight:800;color:var(--t3);min-width:54px;text-transform:uppercase;letter-spacing:.04em}
+.week-prog{flex:1;display:flex;align-items:center;gap:11px}
+.week-track{flex:1;height:5px;background:var(--pink-light);border-radius:100px;overflow:hidden}
+.week-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--pink),var(--rose));transition:width .5s cubic-bezier(.4,0,.2,1)}
+.week-count{font-size:11px;font-weight:800;color:var(--t3);min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+.week-done-badge{font-size:10px;font-weight:800;background:rgba(34,168,92,.12);color:var(--green);border:1px solid rgba(34,168,92,.25);padding:3px 10px;border-radius:100px;white-space:nowrap}
+.week-chev{font-size:10px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.week-block.closed .week-chev{transform:rotate(-90deg)}
+.week-body{border-top:1px solid var(--sep2)}
+.week-block.closed .week-body{display:none}
+
+/* ══ CLASS ROWS ══ */
+.class-row{
+  display:flex;align-items:center;gap:11px;
+  padding:11px 18px;border-bottom:1px solid var(--sep2);transition:background .12s}
+.class-row:last-child{border-bottom:none}
+.class-row:hover{background:rgba(0,0,0,.02)}
+[data-theme="dark"] .class-row:hover{background:rgba(255,255,255,.03)}
+.class-row.completed{background:rgba(34,168,92,.04)}
+
+/* prevalence dot — clickable to cycle */
+.prev-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;cursor:pointer;transition:transform .15s,box-shadow .15s;border:2px solid transparent}
+.prev-dot:hover{transform:scale(1.25)}
+.prev-dot:active{transform:scale(.9)}
+.d-muito{background:var(--red);box-shadow:0 0 6px rgba(229,72,77,.4)}
+.d-prevalente{background:var(--orange)}
+.d-normal{background:var(--blue)}
+.d-baixa{background:var(--t4)}
+
+.area-badge{font-size:10px;font-weight:800;padding:3px 7px;border-radius:6px;white-space:nowrap;flex-shrink:0;min-width:42px;text-align:center}
+.ab-CLM{background:rgba(74,124,229,.1);color:#4A7CE5}
+.ab-CIR{background:rgba(229,135,58,.12);color:var(--orange)}
+.ab-GIN{background:rgba(232,83,122,.1);color:var(--pink)}
+.ab-OBS{background:rgba(139,92,246,.1);color:var(--purple)}
+.ab-PRE{background:rgba(34,168,92,.1);color:var(--green)}
+.ab-PED{background:rgba(212,148,58,.12);color:var(--gold)}
+.ab-PSI{background:rgba(139,92,246,.14);color:#9B59B6}
+.ab-OFT{background:rgba(0,188,212,.1);color:#00BCD4}
+.ab-ORT{background:rgba(229,72,77,.1);color:var(--red)}
+.ab-DER{background:rgba(212,148,58,.14);color:#C99A2E}
+
+.class-info{flex:1;min-width:0}
+.class-title{font-size:13px;font-weight:700;color:var(--t1);line-height:1.35}
+.class-row.completed .class-title{color:var(--t2)}
+.class-meta{font-size:11px;color:var(--t3);margin-top:2px;font-weight:500}
+.class-meta .code{opacity:.7;font-variant-numeric:tabular-nums}
+
+.class-actions{display:flex;gap:5px;flex-shrink:0;align-items:center}
+.ck{
+  width:32px;height:32px;border:1.5px solid var(--sep);border-radius:9px;
+  background:transparent;cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .14s;flex-shrink:0;filter:grayscale(1) opacity(.45)}
+.ck:hover{border-color:var(--pink);filter:grayscale(.3) opacity(.8)}
+.ck.done{background:var(--pink-pale);border-color:var(--pink-light);filter:none}
+
+.btn-edit-class{
+  width:32px;height:32px;border:1.5px solid var(--sep);border-radius:9px;
+  background:transparent;cursor:pointer;font-size:13px;color:var(--t3);
+  display:flex;align-items:center;justify-content:center;transition:all .14s;flex-shrink:0}
+.btn-edit-class:hover{border-color:var(--pink);color:var(--pink)}
+
+/* ══ MODAL ══ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);
+  z-index:500;display:none;align-items:center;justify-content:center;padding:20px;
+  animation:fadeIn .2s ease both}
+.modal-overlay.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--card);border-radius:var(--r);box-shadow:var(--shadow-lg);
+  width:100%;max-width:440px;max-height:90vh;overflow-y:auto;
+  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-hd{
+  padding:18px 22px;border-bottom:1px solid var(--sep);
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modal-title{font-size:17px;font-weight:900;letter-spacing:-.02em}
+.modal-close{background:none;border:none;font-size:22px;color:var(--t3);cursor:pointer;line-height:1;padding:0;width:28px;height:28px}
+.modal-close:hover{color:var(--t1)}
+.modal-body{padding:20px 22px}
+.mb-group{margin-bottom:14px}
+.mb-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);display:block;margin-bottom:6px}
+.mb-input,.mb-select{
+  width:100%;padding:10px 13px;background:var(--card2);border:1.5px solid var(--sep);
+  border-radius:9px;font-size:14px;font-weight:600;color:var(--t1);
+  font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.mb-input:focus,.mb-select:focus{border-color:var(--pink)}
+.mb-row{display:flex;gap:10px}
+.mb-row .mb-group{flex:1}
+.modal-ft{
+  padding:16px 22px;border-top:1px solid var(--sep);
+  display:flex;gap:10px;align-items:center}
+.btn-save{
+  padding:10px 22px;background:linear-gradient(135deg,var(--pink),var(--rose));
+  border:none;border-radius:9px;color:#fff;font-size:13px;font-weight:800;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
+.btn-save:hover{opacity:.9}
+.btn-cancel{
+  padding:10px 16px;background:transparent;border:1.5px solid var(--sep);
+  border-radius:9px;color:var(--t2);font-size:13px;font-weight:700;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:border-color .15s}
+.btn-cancel:hover{border-color:var(--t3)}
+.btn-delete{
+  padding:10px 14px;background:transparent;border:1.5px solid rgba(229,72,77,.25);
+  border-radius:9px;color:var(--red);font-size:12px;font-weight:700;
+  cursor:pointer;font-family:'Inter',sans-serif;margin-left:auto;transition:all .15s}
+.btn-delete:hover{background:rgba(229,72,77,.07)}
+
+/* ══ EMPTY / TOAST / SCROLL ══ */
+.empty{text-align:center;padding:50px 20px;color:var(--t3);font-size:13px;font-style:italic}
+.toast{
+  position:fixed;bottom:22px;right:22px;background:var(--t1);color:var(--bg);
+  padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;
+  z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.scroll-top{
+  position:fixed;bottom:22px;left:22px;width:38px;height:38px;border-radius:50%;
+  background:var(--pink);border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;
+  box-shadow:0 4px 12px rgba(232,83,122,.3)}
+.scroll-top.visible{opacity:1}
+
+/* ══ AUTH ══ */
+.auth-bar{display:flex;align-items:center;gap:8px}
+.auth-avatar{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.5);object-fit:cover}
+.auth-name{font-size:12px;font-weight:700;color:#fff;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-auth{
+  padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;
+  font-family:'Inter',sans-serif;transition:background .2s}
+.btn-auth:hover{background:rgba(255,255,255,.3)}
+.btn-auth-in{background:#fff;color:var(--rose)}
+
+.login-gate{
+  display:none;align-items:center;justify-content:center;
+  max-width:1100px;margin:30px auto 0;padding:40px 24px;min-height:50vh}
+.gate-card{
+  background:var(--card);border:1.5px solid var(--sep);border-radius:var(--r);
+  box-shadow:var(--shadow-lg);padding:40px 34px;text-align:center;max-width:380px}
+.gate-icon{font-size:40px;margin-bottom:14px}
+.gate-title{font-size:24px;font-weight:900;letter-spacing:-.03em;margin-bottom:10px}
+.gate-desc{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:22px}
+.btn-gate{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 26px;border:none;border-radius:100px;cursor:pointer;
+  background:linear-gradient(135deg,var(--pink),var(--rose));color:#fff;
+  font-size:14px;font-weight:800;font-family:'Inter',sans-serif;
+  box-shadow:0 4px 14px rgba(232,83,122,.35);transition:opacity .15s}
+.btn-gate:hover{opacity:.92}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:760px){
+  .stats-bar{grid-template-columns:repeat(3,1fr)}
+  .hero h1{font-size:28px}
+  .page{padding:22px 14px 80px}
+  .stats-bar{padding:0 14px}
+  .class-meta .topic-txt{display:none}
+}
+@media(max-width:480px){
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .area-badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-brand">Papo de Residência · ENAMED 2026</div>
+      <h1>RESITRACK</h1>
+      <div class="hero-sub">Vinícius M S · MED 2026 · Cronograma PDR</div>
+      <div class="countdown" id="countdown"></div>
+    </div>
+    <div class="hero-actions">
+      <div class="auth-bar" id="auth-bar"></div>
+      <button class="btn-hero" onclick="openAddModal()" title="Adicionar aula">＋ Aula</button>
+      <button class="btn-theme" id="btn-theme" onclick="toggleTheme()" title="Alternar tema">🌙</button>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<!-- LOGIN GATE -->
+<div class="login-gate" id="login-gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">RESITRACK</div>
+    <div class="gate-desc">Seu cronograma e progresso são privados e ficam protegidos na sua conta Google. Entre para acessar e sincronizar entre dispositivos.</div>
+    <button class="btn-gate" onclick="loginGoogle()">
+      <span style="font-size:16px">🔑</span> Entrar com Google
+    </button>
+  </div>
+</div>
+
+<div class="page" id="page" style="display:none">
+
+  <div class="sync-banner">
+    <span class="sync-dot" id="sync-dot"></span>
+    <span id="sync-text">Aguardando login</span>
+  </div>
+
+  <div class="info-card">
+    <div>
+      <strong>📺 Como usar:</strong> cada aula tem 3 etapas — <strong>Aula</strong>, <strong>Questões</strong> e <strong>Flashcards</strong>.
+      Clique nos ícones para marcar o que já fez. Clique na <strong>bolinha colorida</strong> para mudar a prevalência na hora,
+      ou no <strong>lápis ✏️</strong> para editar tudo. Seu progresso sincroniza automaticamente entre celular e PC.
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="fg" id="fg-prev">
+      <button class="fb active" data-p="all">Todas</button>
+      <button class="fb f-muito" data-p="muito">🔴 Muito</button>
+      <button class="fb f-prevalente" data-p="prevalente">🟠 Prev.</button>
+      <button class="fb f-normal" data-p="normal">🔵 Normal</button>
+      <button class="fb f-baixa" data-p="baixa">⚪ Baixa</button>
+    </div>
+    <div class="fg" id="fg-status">
+      <button class="fb active" data-s="all">Tudo</button>
+      <button class="fb" data-s="pending">Pendentes</button>
+      <button class="fb" data-s="partial">Andamento</button>
+      <button class="fb" data-s="done">Concluídas</button>
+    </div>
+    <div class="search-wrap">
+      <input class="search" id="search" type="text" placeholder="🔍 Buscar tema, código ou área…">
+    </div>
+  </div>
+
+  <div id="weeks"></div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-hd">
+      <span class="modal-title" id="modal-title">Editar aula</span>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-group">
+        <label class="mb-label">Título da aula</label>
+        <input class="mb-input" id="m-title" type="text" placeholder="ex: Síndrome Metabólica I (HAS e DM)">
+      </div>
+      <div class="mb-row">
+        <div class="mb-group">
+          <label class="mb-label">Semana</label>
+          <input class="mb-input" id="m-wk" type="number" min="1" placeholder="ex: 7">
+        </div>
+        <div class="mb-group">
+          <label class="mb-label">Código</label>
+          <input class="mb-input" id="m-code" type="text" placeholder="ex: CLM03">
+        </div>
+      </div>
+      <div class="mb-row">
+        <div class="mb-group">
+          <label class="mb-label">Área</label>
+          <select class="mb-select" id="m-area">
+            <option value="CLM">CLM · Clínica Médica</option>
+            <option value="CIR">CIR · Cirurgia</option>
+            <option value="PED">PED · Pediatria</option>
+            <option value="GIN">GIN · Ginecologia</option>
+            <option value="OBS">OBS · Obstetrícia</option>
+            <option value="PRE">PRE · Preventiva</option>
+            <option value="PSI">PSI · Psiquiatria</option>
+            <option value="OFT">OFT · Oftalmologia</option>
+            <option value="ORT">ORT · Ortopedia</option>
+            <option value="DER">DER · Dermatologia</option>
+          </select>
+        </div>
+        <div class="mb-group">
+          <label class="mb-label">Prevalência</label>
+          <select class="mb-select" id="m-prev">
+            <option value="muito">🔴 Muito Prevalente</option>
+            <option value="prevalente">🟠 Prevalente</option>
+            <option value="normal">🔵 Normal</option>
+            <option value="baixa">⚪ Baixa Prevalência</option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-group">
+        <label class="mb-label">Tópico (subtítulo curto)</label>
+        <input class="mb-input" id="m-topic" type="text" placeholder="ex: Hipertensão Arterial">
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn-save" id="m-save" onclick="saveModal()">Salvar</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-delete" id="m-delete" onclick="deleteClass()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+// ═══════════════════════════════════════════════════════════════
+//  FIREBASE
+// ═══════════════════════════════════════════════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAjt7KVE8ECiE5deqGrqwzjd4CtPCSj0KM",
+  authDomain: "resitrack-643d0.firebaseapp.com",
+  projectId: "resitrack-643d0",
+  storageBucket: "resitrack-643d0.firebasestorage.app",
+  messagingSenderId: "742082874440",
+  appId: "1:742082874440:web:e30544e36329fdebd99c7d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+let currentUser=null;
+let DOC_REF=null;     // per-user document, set after login
+let unsub=null;
+
+// ═══════════════════════════════════════════════════════════════
+//  SEED — currículo inicial (54 unidades temáticas confirmadas)
+//  Usado APENAS na 1ª vez (quando o doc do Firebase ainda não existe).
+//  Depois disso, o Firebase é a fonte da verdade.
+// ═══════════════════════════════════════════════════════════════
+const SEED_CLASSES = [
+  {id:1, wk:7, code:"CLM03", title:"Síndrome Metabólica I (HAS e Dislipidemia)", area:"CLM", prev:"muito", topic:"Hipertensão Arterial"},
+  {id:2, wk:14, code:"GIN02-B", title:"Oncologia Ginecológica – Endométrio e Colo Uterino", area:"GIN", prev:"muito", topic:"Colo Uterino"},
+  {id:3, wk:13, code:"PRE02", title:"Medidas de Saúde Coletiva", area:"PRE", prev:"prevalente", topic:"Saúde Coletiva"},
+  {id:4, wk:2, code:"CLM01-B", title:"Síndrome Ictérica II – Vias Biliares", area:"CIR", prev:"muito", topic:"Vias Biliares"},
+  {id:5, wk:12, code:"GIN02-A", title:"Oncologia Ginecológica – Mama e Ovário", area:"GIN", prev:"prevalente", topic:"Mama / Ovário"},
+  {id:6, wk:14, code:"CLM07-A", title:"Pneumonia Típica e Atípica + Derrame", area:"CLM", prev:"prevalente", topic:"Pneumonia"},
+  {id:7, wk:10, code:"PED03", title:"Imunização + ITU Pediátrica", area:"PED", prev:"muito", topic:"Imunizações"},
+  {id:8, wk:8, code:"OBS01-A", title:"Sangramentos da Gravidez I (1ª Metade)", area:"OBS", prev:"muito", topic:"Sangramentos Gestação"},
+  {id:9, wk:15, code:"OBS02", title:"Doenças Clínicas na Gravidez", area:"OBS", prev:"muito", topic:"Doenças na Gestação"},
+  {id:10, wk:4, code:"PED02-A", title:"Síndromes Respiratórias na Infância I", area:"PED", prev:"prevalente", topic:"Respiratórias Inf."},
+  {id:11, wk:9, code:"CIR04", title:"Síndrome Álgica I – Dor Abdominal", area:"CIR", prev:"prevalente", topic:"Abdome Agudo"},
+  {id:12, wk:8, code:"PRE01", title:"SUS – Evolução, Diretrizes e Financiamento", area:"PRE", prev:"muito", topic:"Evolução do SUS"},
+  {id:13, wk:9, code:"OBS01-B", title:"Sangramentos da Gravidez II (2ª Metade)", area:"OBS", prev:"muito", topic:"Sangramentos Gestação"},
+  {id:14, wk:5, code:"PED02-B", title:"Síndromes Respiratórias na Infância II", area:"PED", prev:"prevalente", topic:"Respiratórias Inf."},
+  {id:15, wk:11, code:"CLM05-A", title:"Grandes Síndromes Endócrinas I – Tireoide", area:"CLM", prev:"prevalente", topic:"Tireoide"},
+  {id:16, wk:3, code:"GIN01", title:"Síndrome de Transmissão Sexual – IST", area:"GIN", prev:"prevalente", topic:"IST"},
+  {id:17, wk:10, code:"CLM04", title:"Síndrome Metabólica II – Diabetes e Obesidade", area:"CLM", prev:"prevalente", topic:"Diabetes Mellitus"},
+  {id:18, wk:2, code:"CIR01-A", title:"Síndrome de Hipertensão Porta", area:"CIR", prev:"baixa", topic:"Hipertensão Porta"},
+  {id:19, wk:13, code:"CLM06", title:"Terapia Intensiva – Choque e PCR", area:"CLM", prev:"normal", topic:"Choque / PCR"},
+  {id:20, wk:12, code:"CLM05-B", title:"Endócrinas II – Suprarrenal e Cálcio", area:"CLM", prev:"baixa", topic:"Suprarrenal"},
+  {id:21, wk:6, code:"CLM02", title:"Síndrome Diarreica", area:"CLM", prev:"prevalente", topic:"Diarreias"},
+  {id:22, wk:6, code:"CIR03-A", title:"Hemorragia Digestiva I – Conduta", area:"CIR", prev:"normal", topic:"HDA / HDB"},
+  {id:23, wk:3, code:"CIR01-B", title:"Síndrome de Insuficiência Hepática", area:"CIR", prev:"baixa", topic:"Insuf. Hepática"},
+  {id:24, wk:1, code:"CLM01-A", title:"Síndrome Ictérica I – Hepatites", area:"CLM", prev:"baixa", topic:"Hepatites"},
+  {id:25, wk:5, code:"CIR02-B", title:"Síndrome Dispéptica e TGI Superior", area:"CIR", prev:"normal", topic:"Doenças do Estômago"},
+  {id:26, wk:4, code:"CIR02-A", title:"Síndrome Disfágica", area:"CIR", prev:"baixa", topic:"Esôfago"},
+  {id:27, wk:11, code:"CIR05", title:"Oclusão Intestinal + Hérnias", area:"CIR", prev:"normal", topic:"Abdome Obstrutivo"},
+  {id:28, wk:7, code:"CIR03-B", title:"Hemorragia Digestiva II – Proctologia", area:"CIR", prev:"prevalente", topic:"Coloproctologia"},
+  {id:29, wk:1, code:"PED01", title:"Doenças Exantemáticas", area:"PED", prev:"normal", topic:"Exantemáticas"},
+  {id:30, wk:15, code:"PRE03-A", title:"Estudos Epidemiológicos", area:"PRE", prev:"normal", topic:"Estudos Epidemiológicos"},
+  {id:31, wk:23, code:"PRE04-A", title:"Vigilância em Saúde + Ética Médica", area:"PRE", prev:"muito", topic:"Vigilância / Ética"},
+  {id:32, wk:30, code:"PRE05", title:"Intoxicações e Animais Peçonhentos", area:"PRE", prev:"muito", topic:"Intoxicações"},
+  {id:33, wk:28, code:"CIR07", title:"Trauma I + II", area:"CIR", prev:"muito", topic:"Trauma"},
+  {id:34, wk:31, code:"CIR08", title:"Síndrome Álgica III – Dor Lombar", area:"CIR", prev:"muito", topic:"Dor Lombar"},
+  {id:35, wk:18, code:"CLM10", title:"Tosse Crônica – DPOC e Asma", area:"CLM", prev:"muito", topic:"DPOC / Asma"},
+  {id:36, wk:17, code:"CLM09", title:"Síndromes Febris", area:"CLM", prev:"muito", topic:"Síndromes Febris"},
+  {id:37, wk:32, code:"PSI01", title:"Psiquiatria I – Transtornos do Humor", area:"PSI", prev:"muito", topic:"Transtornos do Humor"},
+  {id:38, wk:33, code:"ORT01", title:"Ortopedia I + II", area:"ORT", prev:"muito", topic:"Ortopedia"},
+  {id:39, wk:20, code:"PED05-A", title:"Crescimento e seus Distúrbios", area:"PED", prev:"muito", topic:"Crescimento"},
+  {id:40, wk:34, code:"CLM15", title:"Artrites", area:"CLM", prev:"prevalente", topic:"Artrites"},
+  {id:41, wk:35, code:"CLM16-A", title:"Anemias I – Carenciais", area:"CLM", prev:"prevalente", topic:"Anemias"},
+  {id:42, wk:36, code:"CLM16-B", title:"Anemias II – Hemolíticas", area:"CLM", prev:"prevalente", topic:"Anemias"},
+  {id:43, wk:16, code:"CLM08", title:"Síndrome da Imunodeficiência – HIV/AIDS", area:"CLM", prev:"prevalente", topic:"HIV/AIDS"},
+  {id:44, wk:37, code:"CLM17", title:"Vasculites", area:"CLM", prev:"prevalente", topic:"Vasculites"},
+  {id:45, wk:22, code:"CLM12-A", title:"Geriatria", area:"CLM", prev:"prevalente", topic:"Geriatria"},
+  {id:46, wk:22, code:"OBS03", title:"Sofrimento Fetal / Puerpério e Fórcipe", area:"OBS", prev:"prevalente", topic:"Vitalidade Fetal"},
+  {id:47, wk:38, code:"GIN04", title:"Anticoncepção / Mioma e Endometriose", area:"GIN", prev:"prevalente", topic:"Anticoncepção"},
+  {id:48, wk:39, code:"OBS05", title:"O Parto", area:"OBS", prev:"prevalente", topic:"Mecanismo do Parto"},
+  {id:49, wk:40, code:"GIN05", title:"Amenorreia / Infertilidade e SOP", area:"GIN", prev:"prevalente", topic:"Amenorreia / SOP"},
+  {id:50, wk:25, code:"OBS04", title:"Avaliação Inicial da Gestação / Pré-natal", area:"OBS", prev:"prevalente", topic:"Pré-natal"},
+  {id:51, wk:41, code:"OFT01", title:"Oftalmologia I + II", area:"OFT", prev:"prevalente", topic:"Oftalmologia"},
+  {id:52, wk:42, code:"GIN06", title:"Climatério e Osteoporose", area:"GIN", prev:"prevalente", topic:"Climatério"},
+  {id:53, wk:19, code:"PED04", title:"Neonatologia I + II", area:"PED", prev:"prevalente", topic:"Neonatologia"},
+  {id:54, wk:43, code:"CIR09", title:"Perioperatório I + II", area:"CIR", prev:"prevalente", topic:"Perioperatório"},
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+const EXAM_DATE = new Date("2026-09-13T00:00:00");
+const THEME_KEY = "resitrack_theme";
+const PREV_CYCLE = ["muito","prevalente","normal","baixa"];
+
+let state = { classes: [], prog: {} }; // prog[id] = {watched,questions,flashcards}
+let fPrev="all", fSt="all", fQ="";
+let openWeeks = new Set();
+let modalMode="edit", modalId=null;
+let firstSnapshot=true, writing=false;
+
+// ═══════════════════════════════════════════════════════════════
+//  THEME
+// ═══════════════════════════════════════════════════════════════
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme",t);
+  document.getElementById("btn-theme").textContent = t==="dark"?"🌙":"☀️";
+  localStorage.setItem(THEME_KEY,t);
+}
+window.toggleTheme=()=>applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
+applyTheme(localStorage.getItem(THEME_KEY)||"light");
+
+// ═══════════════════════════════════════════════════════════════
+//  COUNTDOWN
+// ═══════════════════════════════════════════════════════════════
+function renderCountdown(){
+  const now=new Date();
+  const days=Math.ceil((EXAM_DATE-now)/(1000*60*60*24));
+  const weeks=Math.floor(days/7);
+  const el=document.getElementById("countdown");
+  if(days>0) el.innerHTML=`🎯 <b>${days}</b> dias · <b>${weeks}</b> semanas até a prova`;
+  else el.innerHTML=`🎯 Prova realizada — boa sorte!`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SYNC STATUS
+// ═══════════════════════════════════════════════════════════════
+function setSync(status){
+  const dot=document.getElementById("sync-dot");
+  const txt=document.getElementById("sync-text");
+  dot.className="sync-dot";
+  if(status==="on"){dot.classList.add("on");txt.textContent="Sincronizado com a nuvem";}
+  else if(status==="saving"){dot.classList.add("on");txt.textContent="Salvando…";}
+  else if(status==="err"){dot.classList.add("err");txt.textContent="Erro de conexão — verifique as regras do Firestore";}
+  else if(status==="idle"){txt.textContent="Aguardando login";}
+  else txt.textContent="Conectando ao Firebase…";
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FIREBASE — load + save
+// ═══════════════════════════════════════════════════════════════
+async function pushState(){
+  if(!DOC_REF){return;}
+  writing=true;
+  setSync("saving");
+  try{
+    await setDoc(DOC_REF, state);
+    setSync("on");
+  }catch(e){
+    console.error(e); setSync("err");
+    showToast("Erro ao salvar — veja as regras do Firestore");
+  }finally{ writing=false; }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════════════════════════════════
+window.loginGoogle=async()=>{
+  try{ await signInWithPopup(auth,provider); }
+  catch(e){ console.error(e); showToast("Falha no login: "+(e.code||e.message)); }
+};
+window.logout=async()=>{ await signOut(auth); };
+
+function renderAuthBar(){
+  const bar=document.getElementById("auth-bar");
+  const gate=document.getElementById("login-gate");
+  const page=document.getElementById("page");
+  if(!bar)return;
+  if(currentUser){
+    gate.style.display="none";
+    page.style.display="block";
+    bar.innerHTML=`
+      <img src="${currentUser.photoURL||''}" referrerpolicy="no-referrer" class="auth-avatar" onerror="this.style.display='none'">
+      <span class="auth-name">${currentUser.displayName||currentUser.email}</span>
+      <button class="btn-auth" onclick="logout()">Sair</button>`;
+  }else{
+    gate.style.display="flex";
+    page.style.display="none";
+    bar.innerHTML=`<button class="btn-auth btn-auth-in" onclick="loginGoogle()">Entrar com Google</button>`;
+  }
+}
+
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  if(unsub){unsub();unsub=null;}
+  firstSnapshot=true;
+  renderAuthBar();
+  if(!user){ state={classes:[],prog:{}}; return; }
+  DOC_REF=doc(db,"users",user.uid,"resitrack","data");
+  setSync("connecting");
+  unsub=onSnapshot(DOC_REF, snap=>{
+    if(snap.exists()){
+      const data=snap.data();
+      state.classes = Array.isArray(data.classes)?data.classes:[];
+      state.prog = data.prog||{};
+    }else if(firstSnapshot){
+      // Primeira vez nesta conta: semeia o currículo inicial
+      state.classes = SEED_CLASSES.map(c=>({...c}));
+      state.prog = {};
+      pushState();
+    }
+    firstSnapshot=false;
+    setSync("on");
+    renderAll();
+  }, err=>{
+    console.error(err); setSync("err");
+    showToast("Sem acesso ao Firestore — verifique as regras");
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════════
+function getP(id){ return state.prog[id]||{watched:false,questions:false,flashcards:false}; }
+function isDone(id){ const p=getP(id); return p.watched&&p.questions&&p.flashcards; }
+function isPartial(id){ const p=getP(id); const n=(p.watched?1:0)+(p.questions?1:0)+(p.flashcards?1:0); return n>0&&n<3; }
+function prevLabel(c){return{muito:"Muito Prev.",prevalente:"Prevalente",normal:"Normal",baixa:"Baixa Prev."}[c]||c;}
+function nextId(){ return state.classes.length? Math.max(...state.classes.map(c=>c.id))+1 : 1; }
+
+// ═══════════════════════════════════════════════════════════════
+//  ACTIONS (exposed)
+// ═══════════════════════════════════════════════════════════════
+window.toggleStep=(id,step)=>{
+  const p=getP(id);
+  state.prog[id]={...p,[step]:!p[step]};
+  pushState(); renderAll();
+};
+
+window.cyclePrev=(id,ev)=>{
+  ev.stopPropagation();
+  const c=state.classes.find(x=>x.id===id);
+  if(!c)return;
+  const i=PREV_CYCLE.indexOf(c.prev);
+  c.prev=PREV_CYCLE[(i+1)%PREV_CYCLE.length];
+  pushState(); renderAll();
+  showToast(`${c.title.slice(0,24)}… → ${prevLabel(c.prev)}`);
+};
+
+window.toggleWk=(wk)=>{
+  if(openWeeks.has(wk))openWeeks.delete(wk); else openWeeks.add(wk);
+  renderWeeks();
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════════════════
+window.openAddModal=()=>{
+  modalMode="add"; modalId=null;
+  document.getElementById("modal-title").textContent="Adicionar aula";
+  document.getElementById("m-title").value="";
+  document.getElementById("m-wk").value="";
+  document.getElementById("m-code").value="";
+  document.getElementById("m-area").value="CLM";
+  document.getElementById("m-prev").value="prevalente";
+  document.getElementById("m-topic").value="";
+  document.getElementById("m-delete").style.display="none";
+  document.getElementById("modal").classList.add("show");
+};
+
+window.openEditModal=(id)=>{
+  const c=state.classes.find(x=>x.id===id); if(!c)return;
+  modalMode="edit"; modalId=id;
+  document.getElementById("modal-title").textContent="Editar aula";
+  document.getElementById("m-title").value=c.title;
+  document.getElementById("m-wk").value=c.wk;
+  document.getElementById("m-code").value=c.code||"";
+  document.getElementById("m-area").value=c.area;
+  document.getElementById("m-prev").value=c.prev;
+  document.getElementById("m-topic").value=c.topic||"";
+  document.getElementById("m-delete").style.display="block";
+  document.getElementById("modal").classList.add("show");
+};
+
+window.closeModal=()=>document.getElementById("modal").classList.remove("show");
+
+window.saveModal=()=>{
+  const title=document.getElementById("m-title").value.trim();
+  if(!title){showToast("Dê um título à aula");return;}
+  const data={
+    title,
+    wk:parseInt(document.getElementById("m-wk").value)||1,
+    code:document.getElementById("m-code").value.trim(),
+    area:document.getElementById("m-area").value,
+    prev:document.getElementById("m-prev").value,
+    topic:document.getElementById("m-topic").value.trim(),
+  };
+  if(modalMode==="add"){
+    state.classes.push({id:nextId(),...data});
+    showToast("Aula adicionada ✓");
+  }else{
+    const c=state.classes.find(x=>x.id===modalId);
+    if(c)Object.assign(c,data);
+    showToast("Aula atualizada ✓");
+  }
+  pushState(); closeModal(); renderAll();
+};
+
+window.deleteClass=()=>{
+  if(modalId==null)return;
+  const c=state.classes.find(x=>x.id===modalId);
+  if(!confirm(`Excluir a aula "${c?c.title:''}"? Isso não pode ser desfeito.`))return;
+  state.classes=state.classes.filter(x=>x.id!==modalId);
+  delete state.prog[modalId];
+  pushState(); closeModal(); renderAll();
+  showToast("Aula excluída");
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════════════════════════
+function renderStats(){
+  const cl=state.classes;
+  const total=cl.length;
+  const done=cl.filter(c=>isDone(c.id)).length;
+  const partial=cl.filter(c=>isPartial(c.id)).length;
+  const pending=total-done-partial;
+  const muito=cl.filter(c=>c.prev==="muito");
+  const muitoDone=muito.filter(c=>isDone(c.id)).length;
+  const steps=cl.reduce((a,c)=>{const p=getP(c.id);return a+(p.watched?1:0)+(p.questions?1:0)+(p.flashcards?1:0);},0);
+  const stepsTotal=total*3;
+  const pct=stepsTotal?Math.round(steps/stepsTotal*100):0;
+
+  document.getElementById("stats-bar").innerHTML=`
+    <div class="stat-card"><div class="sv" style="color:var(--pink)">${done}<span style="font-size:.9rem;font-weight:500;color:var(--t3)">/${total}</span></div><div class="sl">Concluídas</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--orange)">${partial}</div><div class="sl">Em andamento</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--t3)">${pending}</div><div class="sl">Pendentes</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--green)">${pct}%</div><div class="sl">Progresso total</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--red)">${muitoDone}<span style="font-size:.9rem;font-weight:500;color:var(--t3)">/${muito.length}</span></div><div class="sl">🔴 Muito Prev. OK</div></div>
+    <div class="stat-card"><div class="sv" style="color:var(--blue)">${steps}<span style="font-size:.9rem;font-weight:500;color:var(--t3)">/${stepsTotal}</span></div><div class="sl">Etapas feitas</div></div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FILTER
+// ═══════════════════════════════════════════════════════════════
+function filtered(){
+  return state.classes.filter(c=>{
+    if(fPrev!=="all"&&c.prev!==fPrev)return false;
+    if(fSt==="done"&&!isDone(c.id))return false;
+    if(fSt==="partial"&&!isPartial(c.id))return false;
+    if(fSt==="pending"&&(isDone(c.id)||isPartial(c.id)))return false;
+    if(fQ){
+      const hay=(c.title+" "+(c.topic||"")+" "+(c.code||"")+" "+c.area).toLowerCase();
+      if(!hay.includes(fQ))return false;
+    }
+    return true;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RENDER WEEKS
+// ═══════════════════════════════════════════════════════════════
+function classRow(c){
+  const p=getP(c.id); const done=isDone(c.id);
+  return `<div class="class-row${done?' completed':''}">
+    <span class="prev-dot d-${c.prev}" title="${prevLabel(c.prev)} — clique para mudar" onclick="cyclePrev(${c.id},event)"></span>
+    <span class="area-badge ab-${c.area}">${c.area}</span>
+    <div class="class-info">
+      <div class="class-title">${c.title}</div>
+      <div class="class-meta"><span class="topic-txt">${c.topic||''}</span>${c.topic&&c.code?' · ':''}<span class="code">${c.code||''}</span></div>
+    </div>
+    <div class="class-actions">
+      <button class="ck${p.watched?' done':''}" title="Aula assistida" onclick="toggleStep(${c.id},'watched')">📺</button>
+      <button class="ck${p.questions?' done':''}" title="Questões feitas" onclick="toggleStep(${c.id},'questions')">❓</button>
+      <button class="ck${p.flashcards?' done':''}" title="Flashcards criados" onclick="toggleStep(${c.id},'flashcards')">🃏</button>
+      <button class="btn-edit-class" title="Editar aula" onclick="openEditModal(${c.id})">✏️</button>
+    </div>
+  </div>`;
+}
+
+function renderWeeks(){
+  const fc=filtered();
+  const cont=document.getElementById("weeks");
+  if(!state.classes.length){cont.innerHTML='<div class="empty">Carregando aulas…</div>';return;}
+  if(!fc.length){cont.innerHTML='<div class="empty">Nenhuma aula com esses filtros.</div>';return;}
+
+  const weeks=[...new Set(fc.map(c=>c.wk))].sort((a,b)=>a-b);
+  const searching=!!fQ;
+
+  cont.innerHTML=weeks.map(wk=>{
+    const wkF=fc.filter(c=>c.wk===wk).sort((a,b)=>a.id-b.id);
+    const wkAll=state.classes.filter(c=>c.wk===wk);
+    const wkDone=wkAll.filter(c=>isDone(c.id)).length;
+    const pct=Math.round(wkDone/wkAll.length*100);
+    const allDone=wkDone===wkAll.length;
+    const isOpen=searching||openWeeks.has(wk);
+
+    return `<div class="week-block${isOpen?'':' closed'}${allDone?' all-done':''}">
+      <div class="week-hd" onclick="toggleWk(${wk})">
+        <span class="week-num">Sem ${wk}</span>
+        <div class="week-prog">
+          <div class="week-track"><div class="week-fill" style="width:${pct}%"></div></div>
+          <span class="week-count">${wkDone}/${wkAll.length}</span>
+        </div>
+        ${allDone?'<span class="week-done-badge">✓ Completa</span>':''}
+        <span class="week-chev">▾</span>
+      </div>
+      <div class="week-body">${wkF.map(classRow).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderAll(){
+  renderStats();
+  renderWeeks();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FILTER LISTENERS
+// ═══════════════════════════════════════════════════════════════
+document.querySelectorAll("#fg-prev .fb").forEach(b=>b.addEventListener("click",function(){
+  document.querySelectorAll("#fg-prev .fb").forEach(x=>x.classList.remove("active"));
+  this.classList.add("active"); fPrev=this.dataset.p; renderWeeks();
+}));
+document.querySelectorAll("#fg-status .fb").forEach(b=>b.addEventListener("click",function(){
+  document.querySelectorAll("#fg-status .fb").forEach(x=>x.classList.remove("active"));
+  this.classList.add("active"); fSt=this.dataset.s; renderWeeks();
+}));
+document.getElementById("search").addEventListener("input",function(){
+  fQ=this.value.toLowerCase().trim(); renderWeeks();
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  TOAST + SCROLL
+// ═══════════════════════════════════════════════════════════════
+let toastTimer;
+window.showToast=(msg)=>{
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),2400);
+};
+window.addEventListener("scroll",()=>
+  document.getElementById("scroll-top").classList.toggle("visible",window.scrollY>320));
+
+// ESC fecha modal
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+renderCountdown();
+renderAuthBar();
+setSync("idle");
+
+</script>
+</body>
+</html>
